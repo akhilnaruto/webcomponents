@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML</title>
+    <script>
+        class MyCustomTag extends HTMLElement{
+            constructor(){
+                super();
+                alert("from constructor");
+            }
+
+            connectedCallback(){
+                alert("from connected call back");
+            }
+        }
+
+        customElements.define('my-custom-tag', MyCustomTag);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

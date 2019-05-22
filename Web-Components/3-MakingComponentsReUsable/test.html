@@ -9,11 +9,12 @@
     <script>
         class PolySearch extends HTMLElement {
             connectedCallback() {
+                this.doSearch();
             }
 
             doSearch() {
-                if (this._apiKey && this._searchItem) {
-                    const url = "https://poly.googleapis.com/v1/assets?keywords="+this._searchItem+"&format=OBJ&key="+this._apiKey;
+                if (this.getAttribute('api-key') && this.getAttribute('searchTerm')) {
+                    const url = "https://poly.googleapis.com/v1/assets?keywords="+this.getAttribute('searchTerm')+"&format=OBJ&key="+this.getAttribute('api-key');
                     const request = new XMLHttpRequest();
                     request.open('GET', url, true);
                     request.addEventListener('load', (event) => {
@@ -64,11 +65,11 @@
 </head>
 
 <body>
-    <poly-search></poly-search>
+    <poly-search api-key='AIzaSyAvFW8TtLtwjyY-r5IslIf7DgmKGd22cZE' searchTerm = 'parrot'></poly-search>
 </body>
 <script>
-                    document.querySelector('poly-search').apiKey = 'AIzaSyAvFW8TtLtwjyY-r5IslIf7DgmKGd22cZE';
-                document.querySelector('poly-search').searchItem = 'parrot';
+                   // document.querySelector('poly-search').apiKey = 'AIzaSyAvFW8TtLtwjyY-r5IslIf7DgmKGd22cZE';
+                //document.querySelector('poly-search').searchItem = 'parrot';
 
 </script>
 

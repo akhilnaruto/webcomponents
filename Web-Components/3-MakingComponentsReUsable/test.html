@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script>
+    const url = 'https://poly.googleapis.com/v1/assets?keywords=parrot&format=OBJ&key=AIzaSyAvFW8TtLtwjyY-r5IslIf7DgmKGd22cZE';
+    const request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.addEventListener('load', (event) => {
+        console.log(JSON.parse(event.target.response));
+    });
+    request.send();
+
+</script>
+<body>
+    
+</body>
+</html>

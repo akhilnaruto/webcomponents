@@ -1,40 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script>
-        class PolySearch extends HTMLElement{
-            connectedCallback(){
+        class PolySearch extends HTMLElement {
+            connectedCallback() {
+            }
+
+            doSearch() {
+                if (this._apiKey && this._searchItem) {
+                    const url = "https://poly.googleapis.com/v1/assets?keywords="+this._searchItem+"&format=OBJ&key="+this._apiKey;
+                    const request = new XMLHttpRequest();
+                    request.open('GET', url, true);
+                    request.addEventListener('load', (event) => {
+                        this.renderResults(JSON.parse(event.target.response).assets);
+                    });
+                    request.send();
+                }
+
+            }
+
+            renderResults(assets) {
+                let html = '';
+                for (let c = 0; c < assets.length; c++) {
+                    const img = document.createElement('img');
+                    img.src = assets[c].thumbnail.url;
+                    this.appendChild(img);
+                }
+            }
+
+            set searchItem(value) {
+                this._searchItem = value;
                 this.doSearch();
             }
 
-            doSearch(){
-                const url = "https://poly.googleapis.com/v1/assets?keywords=parrot&format=OBJ&key=AIzaSyAvFW8TtLtwjyY-r5IslIf7DgmKGd22cZE";
-                const request = new XMLHttpRequest();
-                request.open('GET', url, true);
-                request.addEventListener('load', (event) => {
-                    this.renderResults(JSON.parse(event.target.response).assets);
-                });
-                request.send();
-            }
-
-            renderResults(assets){
-                let html = '';
-                for(let c =0; c< assets.length; c++){
-                   const img = document.createElement('img');
-                   img.src = assets[c].thumbnail.url;
-                   this.appendChild(img);
-                }
+            set apiKey(key) {
+                this._apiKey = key;
+                this.doSearch();
             }
         }
-
         customElements.define('poly-search', PolySearch);
+        
     </script>
+    <style>
+        poly-search {
+            border-style: solid;
+            border-width: 1px;
+            border-color: #9a9a9a;
+            padding: 10px;
+            background-color: #fafafa;
+            display: inline-block;
+            text-align: center;
+        }
+
+        poly-search img {
+            margin: 5px;
+        }
+    </style>
 </head>
+
 <body>
     <poly-search></poly-search>
 </body>
+<script>
+                    document.querySelector('poly-search').apiKey = 'AIzaSyAvFW8TtLtwjyY-r5IslIf7DgmKGd22cZE';
+                document.querySelector('poly-search').searchItem = 'parrot';
+
+</script>
+
 </html>

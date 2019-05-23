@@ -8,9 +8,22 @@
     <title>Document</title>
     <script>
         class PolySearch extends HTMLElement {
-            connectedCallback() {
-                this.doSearch();
+            // connectedCallback() {
+            //     this.doSearch();
+            // }
+
+            attributeChangedCallback(attributeName, oldValue, newValue){
+                if(attributeName == "searchterm"){
+                    this.doSearch();
+                }
+
             }
+
+            static get observedAttributes(){
+                return ['searchterm'];
+            }
+
+
 
             doSearch() {
                 if (this.getAttribute('api-key') && this.getAttribute('searchTerm')) {
@@ -65,9 +78,14 @@
 </head>
 
 <body>
-    <poly-search api-key='AIzaSyAvFW8TtLtwjyY-r5IslIf7DgmKGd22cZE' searchTerm = 'parrot'></poly-search>
+    <label>Enter search term: </label>
+    <input type="text" onChange="updatePolySearch(event)">
+    <poly-search api-key='AIzaSyAvFW8TtLtwjyY-r5IslIf7DgmKGd22cZE' ></poly-search>
 </body>
 <script>
+    function updatePolySearch(event){
+        document.querySelector('poly-search').setAttribute('searchTerm', event.target.value);
+    }
                    // document.querySelector('poly-search').apiKey = 'AIzaSyAvFW8TtLtwjyY-r5IslIf7DgmKGd22cZE';
                 //document.querySelector('poly-search').searchItem = 'parrot';
 

@@ -7,18 +7,21 @@
     <title>Connected callback example</title>
 </head>
 <script>
-    class MyCustomTag extends HTMLElement{
+    class WebComponentExample extends HTMLElement{
+        constructor(){
+            super();
+            console.log("constructor - attribute value is "+ this.getAttribute('testAttribute'));
+        }
         connectedCallback(){
-            alert('hi from my custom tag');
-            this.innerHTML = '<h2>'+this.getAttribute('title')+'</h2><button>click me</button>'
+            console.log("connectedCallback - attribute value is "+ this.getAttribute('testAttribute'));
         }
     }
-    if(!customElements.get('my-custom-tag')){
-        customElements.define('my-custom-tag', MyCustomTag);
+    if(!customElements.get('web-component-example')){
+        customElements.define('web-component-example',WebComponentExample);
     }
 </script>
 <style>
-    my-custom-tag {
+    web-component-example {
         background-color: blue;
         padding: 20px;
         display: inline-block;
@@ -26,6 +29,6 @@
     }
 </style>
 <body>
-    <my-custom-tag title="another title"></my-custom-tag>
+    <web-component-example testAttribute="naruto"></web-component-example>
 </body>
 </html>

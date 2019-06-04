@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Connected callback example</title>
+</head>
+<script>
+    class WebComponentExample extends HTMLElement{
+        constructor(){
+            super();
+            console.log("constructor - attribute value is "+ this.getAttribute('testAttribute'));
+        }
+        connectedCallback(){
+            console.log("connectedCallback - attribute value is "+ this.getAttribute('testAttribute'));
+        }
+    }
+    if(!customElements.get('web-component-example')){
+        customElements.define('web-component-example',WebComponentExample);
+    }
+</script>
+<style>
+    web-component-example {
+        background-color: blue;
+        padding: 20px;
+        display: inline-block;
+        color:white;
+    }
+</style>
+<body>
+    <web-component-example testAttribute="naruto"></web-component-example>
+</body>
+</html>
